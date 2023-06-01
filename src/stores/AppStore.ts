@@ -1,23 +1,7 @@
 import { createContext } from "react";
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
-
-interface IAddresses {
-    streetAddress: string;
-    city: string;
-    state: string;
-    zip: string;
-}
-
-interface IPerson {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    description: string;
-    address: IAddresses;
-}
+import { IPerson } from "../interfaces/IPerson";
 
 export class AppStore {
     constructor() {
@@ -27,11 +11,15 @@ export class AppStore {
     persons: IPerson[] = [];
     isLoading: boolean = false;
     loadingError: boolean = false;
-    async fetchData() {
+    currentDataVariant: string = "smallData";
+
+    smallDataUrl: string =
+        "http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
+    bigDataUrl: string =
+        "http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
+    async fetchData(url: string) {
         try {
             this.setIsLoading(true);
-            const url =
-                "http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
             const response = await axios.get<IPerson[]>(url);
             this.persons = response.data;
             if (this.persons) {
@@ -49,6 +37,10 @@ export class AppStore {
 
     setIsError(value: boolean) {
         this.loadingError = value;
+    }
+
+    setCurrentDataVariant(value: string) {
+        this.currentDataVariant = value;
     }
 }
 export const store = new AppStore();

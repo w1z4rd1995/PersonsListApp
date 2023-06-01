@@ -7,6 +7,21 @@ body {
 .App {
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* align-items: center; */
+    margin-top: 50px;
+    margin-left: 300px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.textStyle {
+    width: 800px;
+    height: auto;
+}
+
+.personInfo {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
