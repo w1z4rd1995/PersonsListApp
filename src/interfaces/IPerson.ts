@@ -4,8 +4,8 @@ export interface IPerson {
     lastName: string;
     email: string;
     phone: string;
-    description: string;
-    address: IAddresses;
+    description?: string;
+    address?: IAddresses;
 }
 
 interface IAddresses {

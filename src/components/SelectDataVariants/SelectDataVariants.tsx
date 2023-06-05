@@ -12,7 +12,7 @@ export const SelectDataVariants = observer(() => {
     };
 
     return (
-        <div>
+        <>
             <FormControl>
                 <InputLabel style={{ width: 200 }}>
                     Выберите размер данных
@@ -27,6 +27,6 @@ export const SelectDataVariants = observer(() => {
                     <MenuItem value="bigData">Большой</MenuItem>
                 </Select>
             </FormControl>
-        </div>
+        </>
     );
 });

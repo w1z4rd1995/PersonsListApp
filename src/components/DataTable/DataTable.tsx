@@ -4,7 +4,6 @@ import { store } from "../../stores/AppStore";
 import { DataGrid } from "@mui/x-data-grid";
 import { IPerson } from "../../interfaces/IPerson";
 import { PersonInfo } from "../PersonInfo/PersonInfo";
-import { SelectDataVariants } from "../SelectDataVariants/SelectDataVariants";
 
 export const DataTable = observer(() => {
     const [selectedPerson, setSelectedPerson] = useState<Partial<IPerson>>({});
@@ -24,35 +23,41 @@ export const DataTable = observer(() => {
 
     return (
         <>
-            <div>
-                {store.loadingError === false ? (
-                    <div>
-                        <div style={{ height: 600, width: 800 }}>
-                            <DataGrid
-                                columnBuffer={2}
-                                columnThreshold={2}
-                                rows={store.persons}
-                                columns={columns}
-                                pagination
-                                loading={store.isLoading}
-                                onRowSelectionModelChange={(id) => {
-                                    const selectedIDs = new Set(id);
-                                    const selectedRowData =
-                                        store.persons.filter((person) =>
-                                            selectedIDs.has(person.id)
-                                        );
-                                    if (selectedRowData[0] !== undefined) {
-                                        setSelectedPerson(selectedRowData[0]);
-                                    } else setSelectedPerson({});
-                                }}
-                            />
-                        </div>
-                        <PersonInfo selectedPerson={selectedPerson} />
+            {store.loadingError === false ? (
+                <div>
+                    <div className="testTable">
+                        <DataGrid
+                            initialState={{
+                                pagination: {
+                                    paginationModel: { pageSize: 50 },
+                                },
+                            }}
+                            columnBuffer={10}
+                            columnThreshold={10}
+                            rows={
+                                store.mainData.length === 0
+                                    ? store.persons
+                                    : store.mainData
+                            }
+                            columns={columns}
+                            pagination
+                            loading={store.isLoading}
+                            onRowSelectionModelChange={(id) => {
+                                const selectedIDs = new Set(id);
+                                const selectedRowData = store.persons.filter(
+                                    (person) => selectedIDs.has(person.id)
+                                );
+                                if (selectedRowData[0] !== undefined) {
+                                    setSelectedPerson(selectedRowData[0]);
+                                } else setSelectedPerson({});
+                            }}
+                        />
                     </div>
-                ) : (
-                    <div> Ошибка загрузки</div>
-                )}
-            </div>
+                    <PersonInfo selectedPerson={selectedPerson} />
+                </div>
+            ) : (
+                <div> Ошибка загрузки</div>
+            )}
         </>
     );
 });
