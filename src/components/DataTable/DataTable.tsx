@@ -4,6 +4,7 @@ import { store } from "../../stores/AppStore";
 import { DataGrid } from "@mui/x-data-grid";
 import { IPerson } from "../../interfaces/IPerson";
 import { PersonInfo } from "../PersonInfo/PersonInfo";
+import styles from "./DataTable.module.css";
 
 export const DataTable = observer(() => {
     const [selectedPerson, setSelectedPerson] = useState<Partial<IPerson>>({});
@@ -25,7 +26,7 @@ export const DataTable = observer(() => {
         <>
             {store.loadingError === false ? (
                 <div>
-                    <div className="testTable">
+                    <div className={styles.table}>
                         <DataGrid
                             initialState={{
                                 pagination: {
@@ -35,9 +36,9 @@ export const DataTable = observer(() => {
                             columnBuffer={10}
                             columnThreshold={10}
                             rows={
-                                store.mainData.length === 0
+                                store.mixedPersons.length === 0
                                     ? store.persons
-                                    : store.mainData
+                                    : store.mixedPersons
                             }
                             columns={columns}
                             pagination

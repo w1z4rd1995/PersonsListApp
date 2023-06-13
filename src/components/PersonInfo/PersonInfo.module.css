@@ -1,0 +1,11 @@
+.personInfo {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.personDescription {
+    width: 800px;
+    max-height: 70px;
+}

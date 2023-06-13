@@ -1,0 +1,21 @@
+#root,
+html,
+body {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.appContainer {
+    width: 800px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: row;
+    justify-content: space-between;
+}

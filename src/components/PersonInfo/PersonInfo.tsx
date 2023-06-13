@@ -1,4 +1,5 @@
 import { IPerson } from "../../interfaces/IPerson";
+import styles from "./PersonInfo.module.css";
 
 interface IPersonInfo {
     selectedPerson: Partial<IPerson>;
@@ -8,7 +9,7 @@ export const PersonInfo = (props: IPersonInfo) => {
     return (
         <>
             {Object.keys(props.selectedPerson).length !== 0 && (
-                <div className="personInfo">
+                <div className={styles.personInfo}>
                     <div>
                         Выбран пользователь{" "}
                         <b>
@@ -18,7 +19,7 @@ export const PersonInfo = (props: IPersonInfo) => {
                     </div>
                     <div>
                         Описание:
-                        <div className="textStyle">
+                        <div className={styles.personDescription}>
                             {props.selectedPerson.description}
                         </div>
                     </div>
