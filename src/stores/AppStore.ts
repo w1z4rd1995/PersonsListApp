@@ -8,18 +8,19 @@ export class AppStore {
         makeAutoObservable(this);
     }
 
-    persons: IPerson[] = [];
-    isLoading: boolean = false;
-    loadingError: boolean = false;
-    currentDataVariant: string = "smallData";
-    newPerson: IPerson | null = null;
-    createdPersons: IPerson[] = [];
-    mixedPersons: IPerson[] = [];
-
     smallDataUrl: string =
         "http://www.filltext.com/?rows=32&id={number|100000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
     bigDataUrl: string =
         "http://www.filltext.com/?rows=1000&id={number|100000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
+
+    persons: IPerson[] = [];
+    createdPersons: IPerson[] = [];
+    mixedPersons: IPerson[] = [];
+    isLoading: boolean = false;
+    loadingError: boolean = false;
+    newPerson: IPerson | null = null;
+    currentDataVariant: string = "smallData";
+
     async fetchData(url: string) {
         try {
             this.persons = [];
@@ -51,6 +52,12 @@ export class AppStore {
         this.newPerson = new CreatePerson(person);
         this.createdPersons.unshift(this.newPerson);
         this.mixedPersons = this.createdPersons.concat(this.persons);
+    }
+
+    clearPersonsLists() {
+        this.mixedPersons = [];
+        this.newPerson = null;
+        this.createdPersons = [];
     }
 }
 

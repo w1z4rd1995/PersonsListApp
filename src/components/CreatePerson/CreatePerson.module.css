@@ -28,50 +28,6 @@
     grid-template-rows: repeat(6, 1fr);
 }
 
-.rowContent {
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    padding-left: 50px;
-}
-
-.inputs {
-    width: 400px;
-    height: 35px;
-    border-radius: 8px;
-    font-size: 20px;
-    padding-left: 10px;
-    border: 3px solid black;
-}
-
-.label {
-    font-size: 20px;
-    font-weight: 600;
-    /* padding-top: 10px; */
-    padding-bottom: 5px;
-}
-
-.inputsError {
-    width: 400px;
-    height: 35px;
-    border-radius: 8px;
-    font-size: 20px;
-    padding-left: 10px;
-    border: 3px solid red;
-}
-
-.errorMessage {
-    color: red;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding-bottom: 30px;
-    padding-top: 10px;
-}
-
 .submitButton {
     width: 100px;
 }
