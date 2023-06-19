@@ -8,14 +8,8 @@ export class AppStore {
         makeAutoObservable(this);
     }
 
-    smallDataUrl: string =
-        "http://www.filltext.com/?rows=32&id={number|100000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
-    bigDataUrl: string =
-        "http://www.filltext.com/?rows=1000&id={number|100000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
-
     persons: IPerson[] = [];
-    createdPersons: IPerson[] = [];
-    mixedPersons: IPerson[] = [];
+    tempPersons: IPerson[] = [];
     isLoading: boolean = false;
     loadingError: boolean = false;
     newPerson: IPerson | null = null;
@@ -23,11 +17,11 @@ export class AppStore {
 
     async fetchData(url: string) {
         try {
-            this.persons = [];
             this.setIsLoading(true);
             const response = await axios.get<IPerson[]>(url);
-            this.persons = response.data;
-            if (this.persons) {
+            this.tempPersons = response.data;
+            if (this.tempPersons) {
+                this.removeDublicates();
                 this.setIsLoading(false);
                 this.setIsError(false);
             }
@@ -50,14 +44,18 @@ export class AppStore {
 
     createNewPerson(person: IPerson) {
         this.newPerson = new CreatePerson(person);
-        this.createdPersons.unshift(this.newPerson);
-        this.mixedPersons = this.createdPersons.concat(this.persons);
+        this.persons = [this.newPerson, ...this.persons];
     }
 
-    clearPersonsLists() {
-        this.mixedPersons = [];
-        this.newPerson = null;
-        this.createdPersons = [];
+    clearPersonsList() {
+        this.persons = [];
+    }
+
+    removeDublicates() {
+        const table: { [id: number | string]: number } = {};
+        this.persons = this.tempPersons.filter(
+            ({ id }) => !table[id] && (table[id] = 1)
+        );
     }
 }
 

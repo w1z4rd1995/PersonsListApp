@@ -1,5 +1,6 @@
 import { IPerson } from "../../interfaces/IPerson";
 import styles from "./PersonInfo.module.css";
+import { PersonInfoField } from "../../components/PersonInfoField/PersonInfoField";
 
 interface IPersonInfo {
     selectedPerson: Partial<IPerson>;
@@ -7,38 +8,32 @@ interface IPersonInfo {
 
 export const PersonInfo = (props: IPersonInfo) => {
     return (
-        <>
-            <div className={styles.personInfo}>
-                <div>
-                    Выбран пользователь{" "}
-                    <b>
-                        {props.selectedPerson.firstName}{" "}
-                        {props.selectedPerson.lastName}
-                    </b>
-                </div>
-                <div>
-                    Описание:
-                    <div className={styles.personDescription}>
-                        {props.selectedPerson.description}
-                    </div>
-                </div>
-                <div>
-                    Адрес проживания:
-                    <b> {props.selectedPerson.address?.streetAddress}</b>
-                </div>
-                <div>
-                    Город:
-                    <b> {props.selectedPerson.address?.city}</b>
-                </div>
-                <div>
-                    Провинция/штат:
-                    <b> {props.selectedPerson.address?.state}</b>
-                </div>
-                <div>
-                    Индекс:
-                    <b> {props.selectedPerson.address?.zip}</b>
-                </div>
-            </div>
-        </>
+        <div className={styles.personInfo}>
+            <PersonInfoField
+                title="Выбран пользователь: "
+                description={props.selectedPerson.firstName}
+                optionalDescription={props.selectedPerson.lastName}
+            />
+            <PersonInfoField
+                title="Описание: "
+                description={props.selectedPerson.description}
+            />
+            <PersonInfoField
+                title="Адрес проживания: "
+                description={props.selectedPerson.address?.streetAddress}
+            />
+            <PersonInfoField
+                title="Город: "
+                description={props.selectedPerson.address?.city}
+            />
+            <PersonInfoField
+                title="Провинция/штат: "
+                description={props.selectedPerson.address?.state}
+            />
+            <PersonInfoField
+                title="Индекс: "
+                description={props.selectedPerson.address?.zip}
+            />
+        </div>
     );
 };

@@ -3,8 +3,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import { useState } from "react";
 import { store } from "../../stores/AppStore";
+import styles from "./SelectDataVariants.module.css";
 
 export const SelectDataVariants = observer(() => {
     const onSelectChange = (event: SelectChangeEvent) => {
@@ -12,21 +12,19 @@ export const SelectDataVariants = observer(() => {
     };
 
     return (
-        <>
-            <FormControl>
-                <InputLabel style={{ width: 200 }}>
-                    Выберите размер данных
-                </InputLabel>
-                <Select
-                    style={{ width: 180 }}
-                    value={store.currentDataVariant}
-                    label="Выберите размер данных"
-                    onChange={onSelectChange}
-                >
-                    <MenuItem value="smallData">Маленький</MenuItem>
-                    <MenuItem value="bigData">Большой</MenuItem>
-                </Select>
-            </FormControl>
-        </>
+        <FormControl>
+            <InputLabel className={styles.label}>
+                Выберите размер данных
+            </InputLabel>
+            <Select
+                className={styles.select}
+                value={store.currentDataVariant}
+                label="Выберите размер данных"
+                onChange={onSelectChange}
+            >
+                <MenuItem value="smallData">Маленький</MenuItem>
+                <MenuItem value="bigData">Большой</MenuItem>
+            </Select>
+        </FormControl>
     );
 });

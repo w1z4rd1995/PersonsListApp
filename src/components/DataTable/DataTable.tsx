@@ -11,6 +11,7 @@ import {
     columnBuffer,
     columnThreshold,
 } from "../../constants/constants";
+import { smallDataUrl, bigDataUrl } from "../../constants/urls";
 
 export const DataTable = observer(() => {
     const [selectedPerson, setSelectedPerson] = useState<Partial<IPerson>>({});
@@ -18,15 +19,9 @@ export const DataTable = observer(() => {
     const findSelectedPerson = (id: GridRowSelectionModel) => {
         const selectedID = id[0];
         let selectedRowData: IPerson[] = [];
-        if (!store.newPerson) {
-            selectedRowData = store.persons.filter(
-                (person) => person.id === selectedID
-            );
-        } else {
-            selectedRowData = store.mixedPersons.filter(
-                (person) => person.id === selectedID
-            );
-        }
+        selectedRowData = store.persons.filter(
+            (person) => person.id === selectedID
+        );
         if (selectedRowData[0]) {
             setSelectedPerson(selectedRowData[0]);
         } else setSelectedPerson({});
@@ -34,9 +29,9 @@ export const DataTable = observer(() => {
 
     useEffect(() => {
         if (store.currentDataVariant === "smallData") {
-            store.fetchData(store.smallDataUrl);
-        } else store.fetchData(store.bigDataUrl);
-        return () => store.clearPersonsLists();
+            store.fetchData(smallDataUrl);
+        } else store.fetchData(bigDataUrl);
+        return () => store.clearPersonsList();
     }, [store.currentDataVariant]);
 
     return (
@@ -52,11 +47,7 @@ export const DataTable = observer(() => {
                             }}
                             columnBuffer={columnBuffer}
                             columnThreshold={columnThreshold}
-                            rows={
-                                !store.mixedPersons.length
-                                    ? store.persons
-                                    : store.mixedPersons
-                            }
+                            rows={store.persons}
                             columns={columns}
                             pagination
                             loading={store.isLoading}
